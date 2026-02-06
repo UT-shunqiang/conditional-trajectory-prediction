@@ -15,6 +15,7 @@ conditional-trajectory-prediction/
 ├── main.py                   # Main script for loading and visualizing data
 ├── samples.pkl               # Sample encounter data (pickle format)
 ├── samples.csv               # Sample encounter data (CSV format)
+├── requirements.txt          
 └── README.md
 ```
 
@@ -165,14 +166,14 @@ Each encounter in `samples.pkl` is a dictionary containing:
 ### AIS Point Attributes
 
 - **mmsi**: Maritime Mobile Service Identity - unique 9-digit ship identifier
-- **timestamp**: Unix timestamp (seconds since epoch) or relative time
-- **lon**: Longitude in decimal degrees (positive = East)
-- **lat**: Latitude in decimal degrees (positive = North)
+- **timestamp**: Unix timestamp (seconds) or relative time
+- **lon**: Longitude in decimal degrees (°E)
+- **lat**: Latitude in decimal degrees (°N)
 - **sog**: Speed Over Ground in knots
-- **cog**: Course Over Ground in degrees (0-360°, 0=North, clockwise)
-- **heading**: True heading in degrees (direction bow is pointing)
-- **rot**: Rate of Turn in degrees per minute
-- **statu**: Navigation status code (e.g., 0=under way, 5=moored)
+- **cog**: Course Over Ground in degrees (0-360°)
+- **heading**: True heading in degrees (not used)
+- **rot**: Rate of Turn in degrees per minute(not used)
+- **statu**: Navigation status code(not used)
 - **shiptype**: Ship type code per AIS specification (e.g., 84=cargo, 77=tanker)
 
 
@@ -224,102 +225,9 @@ vis_samples_csv(df, output_dir='my_figures')
 - `list_to_string(ais_points)`: Convert list to string (static method)
 - `list_from_string(ais_str)`: Parse string to list (static method)
 
-## Sample Dataset
-
-The included sample data contains **10 crossing encounters** from the Baltic Sea region, with:
-- Approximately 32-34 trajectory points per ship
-- Temporal resolution of ~20 seconds between points
-- Complete encounter sequences from approach to separation
-- Total of 664 AIS data points across all encounters
 
 
-## Advanced Usage
-
-### Custom Visualization
-
-```python
-import pandas as pd
-import matplotlib.pyplot as plt
-
-# Load data
-df = pd.read_csv('samples.csv')
-
-# Get specific encounter
-enc_data = df[df['encounter_id'] == 5]
-gw = enc_data[enc_data['ship_role'] == 'GW']
-so = enc_data[enc_data['ship_role'] == 'SO']
-
-# Custom plot
-plt.figure(figsize=(10, 8))
-plt.plot(gw['lon'], gw['lat'], 'b-o', label='GW Ship', markersize=8)
-plt.plot(so['lon'], so['lat'], 'r-o', label='SO Ship', markersize=8)
-plt.xlabel('Longitude [°E]')
-plt.ylabel('Latitude [°N]')
-plt.title('Custom Encounter Visualization')
-plt.legend()
-plt.grid(True, alpha=0.3)
-plt.savefig('custom_plot.png', dpi=300, bbox_inches='tight')
-```
-
-### Data Analysis
-
-```python
-import pandas as pd
-import numpy as np
-
-# Load data
-df = pd.read_csv('samples.csv')
-
-# Calculate statistics per encounter
-for enc_id in df['encounter_id'].unique():
-    enc_data = df[df['encounter_id'] == enc_id]
-    
-    gw = enc_data[enc_data['ship_role'] == 'GW']
-    so = enc_data[enc_data['ship_role'] == 'SO']
-    
-    print(f"\nEncounter {enc_id}:")
-    print(f"  GW MMSI: {gw['mmsi'].iloc[0]}")
-    print(f"  SO MMSI: {so['mmsi'].iloc[0]}")
-    print(f"  Duration: {gw['timestamp'].max() - gw['timestamp'].min():.1f}s")
-    print(f"  GW avg speed: {gw['sog'].mean():.1f} knots")
-    print(f"  SO avg speed: {so['sog'].mean():.1f} knots")
-    
-    # Calculate closest point of approach (approximate)
-    min_dist = float('inf')
-    for i in range(len(gw)):
-        for j in range(len(so)):
-            dist = np.sqrt((gw['lon'].iloc[i] - so['lon'].iloc[j])**2 + 
-                          (gw['lat'].iloc[i] - so['lat'].iloc[j])**2)
-            min_dist = min(min_dist, dist)
-    
-    print(f"  Approx. CPA: {min_dist:.4f}°")
-```
-
-### Filtering Encounters
-
-```python
-import pandas as pd
-
-# Load data
-df = pd.read_csv('samples.csv')
-
-# Filter by ship speed
-high_speed_encounters = []
-for enc_id in df['encounter_id'].unique():
-    enc_data = df[df['encounter_id'] == enc_id]
-    avg_speed = enc_data['sog'].mean()
-    
-    if avg_speed > 10.0:  # knots
-        high_speed_encounters.append(enc_id)
-
-print(f"High-speed encounters: {high_speed_encounters}")
-
-# Filter by ship type
-cargo_encounters = df[df['shiptype'].isin([70, 71, 72, 73])]
-print(f"\nCargo ship encounters: {cargo_encounters['encounter_id'].nunique()}")
-```
-
-## Data Sources
+## Data Source
 
 The sample data in this repository is derived from HELCOM AIS dataset(https://www.dma.dk/safety-at-sea/navigational-information/ais-data).
 
