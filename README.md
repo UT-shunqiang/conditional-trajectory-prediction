@@ -12,7 +12,7 @@ conditional-trajectory-prediction/
 │   ├── AisPoint.py          # AIS point data structure and utilities
 │   └── __init__.py
 ├── figs/                     # Generated visualization outputs
-├── load_samples.py           # Main script for loading and visualizing data
+├── main.py           # Main script for loading and visualizing data
 ├── samples.pkl               # Sample encounter data
 └── README.md
 ```
@@ -46,7 +46,7 @@ pip install numpy matplotlib
 Run the main script to load sample encounters and generate visualizations:
 
 ```bash
-python load_samples.py
+python main.py
 ```
 
 This will:
@@ -82,7 +82,7 @@ print(f"Course: {ais_point.get_cog()}°")
 ### Working with Encounter Data
 
 ```python
-from load_samples import load_data, get_lons, get_lats
+from main import load_data, get_lons, get_lats
 from pathlib import Path
 
 # Load encounter samples
