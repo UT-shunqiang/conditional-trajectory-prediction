@@ -2,8 +2,9 @@
 
 A demo for loading, processing, and visualizing ship encounter trajectory data from AIS (Automatic Identification Systems) data.
 
-![Example crossing scenario](figs/cross_sample_9.png)
 
+![Example crossing edge case](figs/trajectory-cross-prediction-edge-case.png)
+*Figure 1: An edge case of trajectory prediction in a stern crossing situation, where a course maneuvering is performed by stand-on ship. Our prediction could adjust the prediction in real-time as the situation unfolds.*
 ## Structure
 
 ```
@@ -13,9 +14,10 @@ conditional-trajectory-prediction/
 │   └── __init__.py
 ├── figs/                     # Generated visualization outputs
 ├── main.py                   # Main script for loading and visualizing data
-├── samples.pkl               # Sample encounter data (pickle format)
-├── samples.csv               # Sample encounter data (CSV format)
-├── requirements.txt          
+├── train_samples.pkl               # Sample encounter data (pickle format)
+├── train_samples.csv               # Sample encounter data (CSV format)
+├── requirements.txt
+├── trajectory-cross-prediction-edge-case.png  # Edge case of prediction        
 └── README.md
 ```
 
@@ -206,6 +208,9 @@ import pandas as pd
 df = pd.read_csv('samples.csv')
 vis_samples_csv(df, output_dir='my_figures')
 ```
+![Example crossing scenario](figs/cross_sample_9.png)
+
+*Figure 2: A sample of crossing scenario from training dataset. where a maneuvering is performed by give-way(GW) ship..*
 
 ### AisPoint Class Methods
 
