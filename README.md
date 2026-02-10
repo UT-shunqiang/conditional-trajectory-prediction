@@ -59,8 +59,8 @@ python main.py
 ```
 
 This will:
-1. Load encounter data from `samples.pkl`
-2. Convert to `samples.csv` format
+1. Load encounter data from `train_samples.pkl`
+2. Convert to `train_samples.csv` format
 3. Generate trajectory plots for each encounter
 4. Save high-resolution figures (300 DPI) to the `figs/` directory
 
@@ -99,7 +99,7 @@ from pathlib import Path
 import pickle
 
 # Load encounter samples from pickle
-pickle_file = Path("samples.pkl")
+pickle_file = Path("train_samples.pkl")
 with open(pickle_file, 'rb') as f:
     encounters = pickle.load(f)
 
@@ -122,7 +122,7 @@ import pandas as pd
 from main import vis_samples_csv
 
 # Load CSV data
-df = pd.read_csv('samples.csv')
+df = pd.read_csv('train_samples.csv')
 
 # View structure
 print(df.head())
@@ -161,7 +161,7 @@ The CSV file contains the following columns:
 
 ### Pickle Structure
 
-Each encounter in `samples.pkl` is a dictionary containing:
+Each encounter in `train_samples.pkl` is a dictionary containing:
 - `'GW'`: List of AisPoint objects for the Give-Way vessel
 - `'SO'`: List of AisPoint objects for the Stand-On vessel
 
@@ -205,7 +205,7 @@ Generate visualization plots from CSV data.
 **Example:**
 ```python
 import pandas as pd
-df = pd.read_csv('samples.csv')
+df = pd.read_csv('train_samples.csv')
 vis_samples_csv(df, output_dir='my_figures')
 ```
 ![Example crossing scenario](figs/cross_sample_9.png)
