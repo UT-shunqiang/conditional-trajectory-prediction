@@ -3,7 +3,7 @@
 A demo for loading, processing, and visualizing ship encounter trajectory data from AIS (Automatic Identification Systems) data.
 
 
-![Example crossing edge case](figs/trajectory-cross-prediction-edge-case.png)
+![Example crossing edge case](trajectory-cross-prediction-edge-case.png)
 *Figure 1: An edge case of trajectory prediction in a stern crossing situation, where a course maneuvering is performed by stand-on ship. Our prediction could adjust the prediction in real-time as the situation unfolds.*
 ## Structure
 
