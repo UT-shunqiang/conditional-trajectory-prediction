@@ -128,8 +128,8 @@ def vis_samples_csv(df, output_dir='figs'):
 if __name__ == "__main__":
     # Set up file paths
     script_dir = Path(__file__).resolve().parent
-    pickle_file = script_dir / "samples.pkl"
-    csv_file = script_dir / "samples.csv"
+    pickle_file = script_dir / "train_samples.pkl"
+    csv_file = script_dir / "train_samples.csv"
     
     print("="*60)
     print("Ship Encounter Data - CSV Converter and Visualizer")
