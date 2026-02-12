@@ -1,10 +1,10 @@
 # Conditional Trajectory Prediction
 
-A demo for loading, processing, and visualizing ship encounter trajectory data from AIS (Automatic Identification Systems) data.
-
+**The full code and data will be released soon. Meanwhile, we offer a sample of the dataset and the tools provided.**
 
 ![Example crossing edge case](trajectory-cross-prediction-edge-case.png)
 *Figure 1: An edge case of trajectory prediction in a stern crossing situation, where a course maneuvering is performed by stand-on ship. Our prediction could adjust the prediction in real-time as the situation unfolds.*
+
 ## Structure
 
 ```
